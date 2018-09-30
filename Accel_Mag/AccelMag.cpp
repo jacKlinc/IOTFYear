@@ -1,5 +1,3 @@
-#include "mbed.h"
-
 // Accelerometer : MMA8653FC.  I2C address
 I2C i2c(P0_30, P0_0); // SDA is on P0_30, SCL is on P0_0
 const int MMA8653_ADDRESS = (0x1d<<1); 
