@@ -17,7 +17,7 @@
 #include "mbed.h"
 #include "ble/BLE.h"
 #include "LEDService.h"
-#include "ACCELService.h"
+#include "accelservice.h"
 
 /* 
  * All the LEDs on the micro:bit are part of the LED Matrix,
@@ -29,7 +29,7 @@ DigitalOut col1(P0_4, 0);
 DigitalOut alivenessLED(P0_13, 0);
 DigitalOut actuatedLED(P0_14, 0);
 
-const static char     DEVICE_NAME[] = "Mufasa";
+const static char     DEVICE_NAME[] = "BBCAccel";
 static const uint16_t uuid16_list[] = {LEDService::LED_SERVICE_UUID,ACCELService::ACCEL_SERVICE_UUID};
 
 LEDService *ledServicePtr;
