@@ -1,4 +1,4 @@
-// This GetZ class is specifically for the Accel.cpp
+// This GetZ class is specifically for the Accelerometer
 class GetZ{
     public:
         GetZ();
@@ -25,7 +25,7 @@ GetZ::GetZ () {
 	}
 
 	Zdata[0]=0x2a; // accel wakeup
-	Zdata[1]=1;
+	Zdata[1]=1; // it wants to read
 	Zstatus = i2c.write(MMA8653_ADDRESS,Zdata,2);  // Write Zdata to register
 
 	while(1){

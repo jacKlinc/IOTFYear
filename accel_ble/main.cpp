@@ -51,13 +51,11 @@ ADCService *ADCServicePtr;
 AccelService *AccelServicePtr;
 Ticker ticker;
 
-void disconnectionCallback(const Gap::DisconnectionCallbackParams_t *params)
-{
+void disconnectionCallback(const Gap::DisconnectionCallbackParams_t *params){
     BLE::Instance().gap().startAdvertising();
 }
 
-void periodicCallback(void)
-{
+void periodicCallback(void){
     alivenessLED = !alivenessLED; /* Do blinky on LED1 to indicate system aliveness. */
 }
 
@@ -87,8 +85,7 @@ void onBleInitError(BLE &ble, ble_error_t error)
 /**
  * Callback triggered when the ble initialization process has finished
  */
-void bleInitComplete(BLE::InitializationCompleteCallbackContext *params)
-{
+void bleInitComplete(BLE::InitializationCompleteCallbackContext *params){
     BLE&        ble   = params->ble;
     ble_error_t error = params->error;
 
@@ -138,12 +135,9 @@ int main(void)
     Status = i2c.write(MMA8653_ADDRESS,Data,1,true);  // Write register number
     Status = i2c.read(MMA8653_ADDRESS,Data,1); // Read register contents
     pc.printf("Data read=%d\r\n",(int) Data[0]);
-    if (Data[0]==MMA8653_ID)
-    {
+    if (Data[0]==MMA8653_ID)    {
         pc.printf("MMA8653 Found on I2C Bus\r\n");
-    }
-    else
-    {
+    } else  {
         pc.printf("MMA8653 Not present\r\n");
         while(1); // can't proceed
     }
