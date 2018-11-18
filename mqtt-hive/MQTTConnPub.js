@@ -8,9 +8,8 @@ console.log("Client Started");
 client.on('connect', connectCallback); //when a 'connect' event is received call the connectCallback listener function
 
 function connectCallback() {
-	// publish a message to a topic, topic1/test
-	client.publish('DT021/jackf', 'hello world', publishCallback);
-	client.subscribe('DT021/jackf', clientSub); 
+	client.publish('JackIOT/yo', 'hello world', publishCallback); // publish a message to a topic, JackIOT/yo
+	client.subscribe('JackIOT/yo', clientSub); 
 }
 
 function publishCallback(error) {     
@@ -23,6 +22,6 @@ function publishCallback(error) {
 }
 
 function clientSub(topic, message, packet) {     
-	//client.subscribe('DT021/jackf');
+	client.subscribe('JackIOT/yo');
 	console.log(message.toString());
 }

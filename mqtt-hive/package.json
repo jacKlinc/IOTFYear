@@ -1,7 +1,6 @@
 {
   "name": "mqtt-hive",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +8,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mqtt": "^2.18.8"
-  }
+    "graceful-fs": "^4.1.15",
+    "mqtt": "^2.18.8",
+    "noble": "^1.9.1"
+  },
+  "devDependencies": {},
+  "description": ""
 }
