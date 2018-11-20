@@ -43,6 +43,32 @@ function connectCallback(error) { 													//this will be executed when the 
 	} 
 }
 
+function discoverServicesCallback(error, services) { 								//this will be executed when the discoverServices request returns
+	if (error) {
+		console.log("error discovering services");
+	} else {
+		console.log("The device contains the following services");			
+		for (var i in services) {													// iterates through services e.g MagService, AccelService
+			console.log('  ' + i + ' UUID: ' + services[i].uuid);					// prints each service
+		}
+		var LED, Accel, Mag = services[0], services[1], services[2];		// picks 0th element of array
+		deviceInformationService.discoverCharacteristics(null, discoverCharsCallback); //call the discoverCharacteristics function and when it returns the callback function discoverCharsCallback will be executed
+	}
+}
+
+function discoverCharsCallback(error, characteristics) { 							//this will be executed when the discoverCharacteristics request returns
+	if (error) {
+		console.log("error discovering characteristics");
+	} else {
+		console.log('discovered the following characteristics associated with the 6th service:');
+		for (var i in characteristics) {											// iterates through characteristics e.g X, Y, Z
+			console.log('  ' + i + ' uuid: ' + characteristics[i].uuid);			// prints each characteristics
+        }
+        var X, Y, Z = characteristics[0], characteristics[1], characteristics[2];									// values of each characteristic 
+        sensorLevelData.read(readDataCallback); 			//call the read function and when it returns the callback function readDataCallback will be executedcallback function writeDataCallback will be executed
+	} 
+}
+
 function publishCallback(error) {     
    	if (error) {
 		console.log("error publishing data");
@@ -50,6 +76,28 @@ function publishCallback(error) {
         console.log("Message is published");
         //client.end(); // Close the connection when published
     }
+}
+
+function readDataCallback(error, data) { 											//this will be executed when the read request returns
+	if (error) {
+		console.log("error reading data");
+	} else {	
+		console.log("Sensor reading is: " + data.toString('hex')); 					// converts data to hex and prints e.g X = 0xFF23
+		if(topic == 'JackIOT/LED' && (data == '1' || data == 'on')){
+			// turn on led
+		} else if(topic == 'JackIOT/LED' && (data == '0' || data == 'off')){
+			// turn off led
+		}
+		peripheralGlobal.disconnect(disconnectCallback);							// disconnects via the disconnect function
+	}
+}
+
+function disconnectCallback(error){ 												// this will be executed when the disconnect request returns
+	if (error) {
+		console.log("error disconnecting");
+	} else {
+		console.log("Disconnecting and stopping scanning");
+	}
 }
 
 
