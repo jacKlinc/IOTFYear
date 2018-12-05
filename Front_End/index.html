@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">		
+		<title>Baby Monitor</title>
+    </head>
+	
+    <body>	
+        <h1>Baby Monitor</h1>
+        <h2>Connection</h2>
+        <button id = "connect" >Connect</button>
+        <button id = "publish" >Publish</button>
+        <button id = "subscribe" >Subcribe</button>
+        
+        <h2>Baby Status</h2>
+        <button id = "bbygood" >Safe?</button>
+        <button id = "findbby" >Light</button>
+        <button id = "direction" >Direction</button>
+
+        <script type="text/javascript" src="paho-mqtt.js" ></script>
+        <!--This is a reference to the Paho Javascript client side browser based library-->
+        <script type="text/javascript" src="MQTTConnPubHive.js"></script> <!--linked to MQTT js file-->
+        
+    </body>
+</html>

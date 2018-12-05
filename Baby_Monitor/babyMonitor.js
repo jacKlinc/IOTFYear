@@ -9,8 +9,8 @@ console.log("Started");
 
 noble.on('stateChange', stateChangeEventHandler); 						// calls to determine state change
 noble.on('discover', discoverDeviceEventHandler); 						// find device callback
-client.on('message' , messageCallBack);									// accepts a message, necessary for input 
-client.on('connect' , connectCallBack);                                 // initialises connection with MQTT
+client.on('message', messageCallBack);									// accepts a message, necessary for input 
+client.on('connect', connectCallBack);                                 // initialises connection with MQTT
 
 /* *************** MQTT **************** */
 
