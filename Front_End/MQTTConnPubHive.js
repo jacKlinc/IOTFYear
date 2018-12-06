@@ -9,9 +9,9 @@ document.getElementById("connect").addEventListener("click", connectToBroker); /
 document.getElementById("publish").addEventListener("click", publishToBroker); 
 document.getElementById("subscribe").addEventListener("click", subscribeToTopic); 
 
-document.getElementById("bbygood").addEventListener("click", connectToAccel); // connects to buttons
-document.getElementById("findbby").addEventListener("click", connectToLED); 
-document.getElementById("direction").addEventListener("click", connectToMag);
+document.getElementsByClassName("bbygood").addEventListener("click", connectToAccel); // connects to buttons;
+document.getElementsByClassName("findbby").addEventListener("click", connectToLED); 
+document.getElementsByClassName("direction").addEventListener("click", connectToMag);
 // set callback handlers
 //client.onConnected = onConnected;
 client.onConnectionLost = onConnectionLost;
@@ -64,4 +64,16 @@ function onConnectionLost(responseObject) {
     if (responseObject.errorCode !== 0) {
         console.log("onConnectionLost:"+responseObject.errorMessage);
     }
+}
+
+function connectToAccel(){
+    console.log("Accel");
+}
+
+function connectToMag(){
+    console.log("Mag");
+}
+
+function connectToLED(){
+    console.log("LED");
 }

@@ -1,28 +1,62 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Baby Monitor</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form">
+				<span class="contact100-form-title">
+					Baby Monitor
+				</span>
 
-<html>
-    <head>
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">		
-		<title>Baby Monitor</title>
-    </head>
-	
-    <body>	
-        <h1>Baby Monitor</h1>
-        <h2>Connection</h2>
-        <button id = "connect" >Connect</button>
-        <button id = "publish" >Publish</button>
-        <button id = "subscribe" >Subcribe</button>
-        
-        <h2>Baby Status</h2>
-        <button id = "bbygood" >Safe?</button>
-        <button id = "findbby" >Light</button>
-        <button id = "direction" >Direction</button>
+				<div class="wrap-input100 validate-input" data-validate = "Message is required">
+					<textarea class="input100" name="message" placeholder="Output"></textarea>
+				</div>
+				<div class="bbygood">
+					<div class="wrap-contact100-form-btn">
+						<div class="contact100-form-bgbtn"></div>
+						<button class="contact100-form-btn">
+							Baby Good?
+						</button>
+					</div>
+				</div>
+				<div class="findbby">
+						<div class="wrap-contact100-form-btn">
+							<div class="contact100-form-bgbtn"></div>
+							<button class="contact100-form-btn">
+								Baby Where?
+							</button>
+						</div>
+				</div>
+				<div class="direction">
+						<div class="wrap-contact100-form-btn">
+							<div class="contact100-form-bgbtn"></div>
+							<button class="contact100-form-btn">
+								Baby Go Where?
+							</button>
+						</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="paho-mqtt.js" ></script><!--paho library-->
+	<script type="text/javascript" src="MQTTConnPubHive.js"></script> <!--linked to MQTT js file-->
 
-        <script type="text/javascript" src="paho-mqtt.js" ></script>
-        <!--This is a reference to the Paho Javascript client side browser based library-->
-        <script type="text/javascript" src="MQTTConnPubHive.js"></script> <!--linked to MQTT js file-->
-        
-    </body>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+</script>
+
+</body>
 </html>
