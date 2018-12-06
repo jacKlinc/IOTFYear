@@ -67,7 +67,7 @@ function discoverDeviceEventHandler(peripheral) { 						//event handler callback
 	} 
 }
 
-function connectCallback(error) { 										// returns device name
+function connectCallBack(error) { 										// returns device name
 	if (error) {
 		console.log("error connecting to peripheral");
 	} else {		
