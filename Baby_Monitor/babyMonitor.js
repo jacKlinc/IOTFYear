@@ -1,7 +1,26 @@
 var mqtt 	= require('mqtt');											// includes npm libraries
-var noble 	= require('noble');
 var client 	= mqtt.connect('mqtt://broker.mqttdashboard.com');
+var noble 	= require('noble');
 var ledState = false, serviceNo = 2;									// ledState (on/off), serviceNo (LED/Mag/Accel)
+
+const Influx  = require('influx');
+const os      = require('os');
+const influx  = new Influx.InfluxDB({
+  host: 'localhost',
+  database: 'Monitor',
+  schema: [
+    {
+      measurement: 'Readings',
+      fields: {
+        Device: Influx.FieldType.STRING,
+        Value: Influx.FieldType.STRING
+      },
+      tags: [
+        'read_os'
+      ] 
+    }
+  ]
+})
 
 console.log("Started");
 
@@ -10,11 +29,10 @@ console.log("Started");
 noble.on('stateChange', stateChangeEventHandler); 						// calls to determine state change
 noble.on('discover', discoverDeviceEventHandler); 						// find device callback
 client.on('message', messageCallBack);									// accepts a message, necessary for input 
-client.on('connect', connectCallBack);                                 // initialises connection with MQTT
 
 /* *************** MQTT **************** */
 
-function messageCallBack(topic, message) {								// this determines what the user wants to do
+function messageCallBack(message) {								// this determines what the user wants to do
 	console.log("Message recieved");
 	if(message == 'baby where?') {										// if this string is 'led on'
 		ledState = true, serviceNo = 2;                                 // led switched on, led service selected
@@ -46,6 +64,9 @@ function publishCallBack(error) {
 	}
 }
 
+
+//connectClient
+
 /* *************** Noble **************** */
 
 function stateChangeEventHandler(state) { 								//event handler callback function
@@ -63,7 +84,7 @@ function discoverDeviceEventHandler(peripheral) { 						//event handler callback
 	console.log("Peripheral UUID: " + peripheral.uuid);
     if (peripheral.uuid == "f00a6eae7c20") { 							// MAC Addr of micro
         peripheralGlobal = peripheral;  								
-		peripheral.connect(connectCallback);							// calls connectCallback to subscribe													
+		peripheral.connect(connectCallBack);							// calls connectCallback to subscribe													
 	} 
 }
 
@@ -79,7 +100,7 @@ function connectCallBack(error) { 										// returns device name
 function discoverServicesCallback(error, services) { 					// takes services and sends to characteristics
 	if (error) {
 		console.log("error discovering services");
-	} else {
+	} else {	
 		console.log("Services");			
 		var deviceInformationService = services[serviceNo]; 			// selecting a service in the device, specified by number
 		deviceInformationService.discoverCharacteristics(null, discoverCharsCallback); // calls chars callback
@@ -122,6 +143,13 @@ function readMag(error, data) { 										// prints accel data
 	} else {
 		var mag = data.toString('hex');								    // converts X, Y, Z on each iteration of for loop
 		client.publish('JackIOT/yo', 'Baby direction: ' + mag, publishCallBack); // publishes the heading of device
+		influx.writePoints([
+			{
+			  measurement: 'Readings', 
+			  tags:   { read_os: os.hostname() },
+			  fields: { Device: "Mag", Value: mag },
+			}
+		]);
 	}
 }
 
@@ -129,8 +157,15 @@ function readAccel(error, data) { 										// prints accel data
 	if (error) {
 		console.log("error reading data");
 	} else {
-		var accel = data.toString('hex');								// same as readMag
+		var accel = data.toString('10');								// same as readMag
 		client.publish('JackIOT/yo', 'Baby hex: ' + accel, publishCallBack); // publishes acceleration of device
+		influx.writePoints([
+			{
+			  measurement: 'Readings', 
+			  tags:   { read_os: os.hostname() },
+			  fields: { Device: "Accel", Value: accel },
+			}
+		]);
 	}
 }
 

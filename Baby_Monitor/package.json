@@ -9,6 +9,8 @@
   "license": "ISC",
   "dependencies": {
     "graceful-fs": "^4.1.15",
+    "influx": "^5.0.7",
+    "influxdb": "0.0.1",
     "mqtt": "^2.18.8",
     "noble": "^1.9.1"
   },
