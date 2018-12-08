@@ -29,7 +29,7 @@ console.log("Started");
 noble.on('stateChange', stateChangeEventHandler); 						// calls to determine state change
 noble.on('discover', discoverDeviceEventHandler); 						// find device callback
 client.on('message', messageCallBack);									// accepts a message, necessary for input 
-
+client.on('connect', connectCallback);
 /* *************** MQTT **************** */
 
 function messageCallBack(message) {								// this determines what the user wants to do
@@ -64,8 +64,10 @@ function publishCallBack(error) {
 	}
 }
 
+function connectCallback() {
+	client.subscribe('hup/dup'); 
+}
 
-//connectClient
 
 /* *************** Noble **************** */
 
@@ -89,12 +91,12 @@ function discoverDeviceEventHandler(peripheral) { 						//event handler callback
 }
 
 function connectCallBack(error) { 										// returns device name
-	if (error) {
-		console.log("error connecting to peripheral");
-	} else {		
+	// if (error) {
+	// 	console.log("error connecting to peripheral");
+	// } else {		
 		console.log('Connected to peripheral: ' + "   " + peripheralGlobal.advertisement.localName);
 		peripheralGlobal.discoverServices([], discoverServicesCallback); // jumps to services function
-	}
+	//}
 }
 
 function discoverServicesCallback(error, services) { 					// takes services and sends to characteristics

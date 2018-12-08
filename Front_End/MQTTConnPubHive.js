@@ -1,8 +1,21 @@
-//Using Hive broker - dashboard available at http://www.hivemq.com/demos/websocket-client/
-//Uses the Paho MQTT JS client library - http://www.eclipse.org/paho/files/jsdoc/index.html to send and receive messages using a web browser
-//Example code available at https://www.hivemq.com/blog/mqtt-client-library-encyclopedia-paho-js
-
-// Create a client instance
+const Influx  = require('influx');
+const os      = require('os');
+const influx  = new Influx.InfluxDB({
+  host: 'localhost',
+  database: 'Monitor',
+  schema: [
+    {
+      measurement: 'Readings',
+      fields: {
+        Device: Influx.FieldType.STRING,
+        Value: Influx.FieldType.STRING
+      },
+      tags: [
+        'read_os'
+      ] 
+    }
+  ]
+})
 client = new Paho.MQTT.Client("broker.mqttdashboard.com", 8000, "web_" + parseInt(Math.random() * 100, 10)); // random URL
 
 document.getElementById("connect").addEventListener("click", connectToBroker); // connects to buttons
@@ -12,7 +25,7 @@ document.getElementById("subscribe").addEventListener("click", subscribeToTopic)
 document.getElementsByClassName("bbygood").addEventListener("click", connectToAccel); // connects to buttons;
 document.getElementsByClassName("findbby").addEventListener("click", connectToLED); 
 document.getElementsByClassName("direction").addEventListener("click", connectToMag);
-// set callback handlers
+
 //client.onConnected = onConnected;
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
@@ -68,12 +81,36 @@ function onConnectionLost(responseObject) {
 
 function connectToAccel(){
     console.log("Accel");
+    influx.query(`
+        select * from Readings
+        where Device = ${Influx.escape.stringLit(Device.Accel())}
+        order by time desc
+        limit 1
+    `).then(rows => {
+        rows.forEach(row => console.log(`The gateway at ${row.read_os}'s ${row.Device} value was 0x${row.Value}`))
+    });
 }
 
 function connectToMag(){
     console.log("Mag");
+    influx.query(`
+        select * from Readings
+        where Device = ${Influx.escape.stringLit(Device.Mag())}
+        order by time desc
+        limit 1
+    `).then(rows => {
+        rows.forEach(row => console.log(`The gateway at ${row.read_os}'s ${row.Device} value was 0x${row.Value}`))
+    });
 }
 
 function connectToLED(){
     console.log("LED");
+    influx.query(`
+        select * from Readings
+        where Device = ${Influx.escape.stringLit(Device.LED())}
+        order by time desc
+        limit 1
+    `).then(rows => {
+        rows.forEach(row => console.log(`The gateway at ${row.read_os}'s ${row.Device} value was ${row.Value}`))
+    });
 }
