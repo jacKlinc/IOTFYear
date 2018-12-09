@@ -1,9 +1,10 @@
 // Basic use of Influx 
 const Influx  = require('influx');
 const os      = require('os');
+// You need to create a database in the influx shell thingy (CREATE DATABASE DITdb)
 const influx  = new Influx.InfluxDB({       // this acts as an initialisation for the already created database
   host: 'localhost',
-  database: 'Monitor',                      // made in Terminal window
+  database: 'Monitor',                      // database name given 
   schema: [
     {
       measurement: 'Readings',              // like a table in RDBMS 
@@ -26,6 +27,7 @@ influx.writePoints([                        // writes data to database
   }
 ]);
 
+// Put this is in your readAccel/Mag function in MQTT upload script
 influx.query(`
     select * from Readings
     where read_os = ${Influx.escape.stringLit(os.hostname())} 

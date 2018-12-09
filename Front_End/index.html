@@ -4,28 +4,63 @@
 	<title>Baby Monitor</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-<!--===============================================================================================-->
+	<style>
+		.switch {
+			position: relative;
+			display: inline-block;
+			width: 60px;
+			height: 34px;
+		}
+		.switch input { 
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+		.slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #ccc;
+			-webkit-transition: .4s;
+			transition: .4s;
+		}
+		.slider:before {
+			position: absolute;
+			content: "";
+			height: 26px;
+			width: 26px;
+			left: 4px;
+			bottom: 4px;
+			background-color: white;
+			-webkit-transition: .4s;
+			transition: .4s;
+		}
+		input:checked + .slider {
+			background-color: #d5007d;
+		}
+		input:focus + .slider {
+			box-shadow: 0 0 1px #d5007d;
+		}
+		
+		input:checked + .slider:before {
+			-webkit-transform: translateX(26px);
+			-ms-transform: translateX(26px);
+			transform: translateX(26px);
+		}
+		/* Rounded sliders */
+		.slider.round {
+			border-radius: 34px;
+		}
+		
+		.slider.round:before {
+			border-radius: 50%;
+		}
+	</style>
 </head>
 <body>
 	<div class="container-contact100">
@@ -34,11 +69,16 @@
 				<span class="contact100-form-title">
 					Baby Monitor
 				</span>
-
 				<div class="wrap-input100 validate-input" data-validate = "Message is required">
 					<textarea class="input100" name="message" placeholder="Output"></textarea>
 				</div>
-				<div class="bbygood">
+				<script>
+					var textArea = document.getElementById("input100");
+					function outputToBox(){
+						textArea.value = "wow";
+					}
+				</script>
+				<div class="bbygood" style="width: 150px;">
 					<div class="wrap-contact100-form-btn">
 						<div class="contact100-form-bgbtn"></div>
 						<button class="contact100-form-btn">
@@ -46,15 +86,7 @@
 						</button>
 					</div>
 				</div>
-				<div class="findbby">
-						<div class="wrap-contact100-form-btn">
-							<div class="contact100-form-bgbtn"></div>
-							<button class="contact100-form-btn">
-								Baby Where?
-							</button>
-						</div>
-				</div>
-				<div class="direction">
+				<div class="direction" style="width: 150px;">
 						<div class="wrap-contact100-form-btn">
 							<div class="contact100-form-bgbtn"></div>
 							<button class="contact100-form-btn">
@@ -63,12 +95,17 @@
 						</div>
 				</div>
 			</form>
+			<h2>Light</h2>
+				<label class="switch">
+					<input type="checkbox" checked>
+					<span class="slider round"></span>
+				</label>
 		</div>
 	</div>
 	<script type="text/javascript" src="paho-mqtt.js" ></script><!--paho library-->
 	<script type="text/javascript" src="MQTTConnPubHive.js"></script> <!--linked to MQTT js file-->
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- Global site tag (gtag.js) - Google Analytics 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -77,6 +114,6 @@
 
   gtag('config', 'UA-23581568-13');
 </script>
-
+-->
 </body>
 </html>

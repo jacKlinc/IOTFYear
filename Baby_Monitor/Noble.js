@@ -18,7 +18,7 @@ console.log("Event Discovered");
 function discoverDeviceEventHandler(peripheral) { 									//event handler callback function 
 	console.log('Found device: ' + peripheral.advertisement.localName);				// prints name of device to console
 	console.log("Peripheral UUID: " + peripheral.uuid);
-	if (peripheral.uuid == "Mufasa"){ 												// UUID of the peripheral
+	if (peripheral.uuid == "f00a6eae7c20"){ 												// UUID of the peripheral
 		peripheralGlobal = peripheral;  											// set the peripheralGlobal variable equal to the callback peripheral parameter value
 		console.log(peripheral.uuid);
 		peripheral.connect(connectCallback); 										//call the connect function and when it returns the callback function connectCallback will be executed

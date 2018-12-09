@@ -1,10 +1,25 @@
+var requirejs = require('requirejs');
+
+requirejs.config({
+   //load the mode modules to top level JS file 
+   //by passing the top level main.js require function to requirejs
+   nodeRequire: require
+});
+
+requirejs(['name1', 'name2'],
+   function (name1, name2) {
+      //by using requirejs config, name1 and name2 are loaded
+      //node's require loads the module, if they did not find these
+   }
+);
+
 const Influx  = require('influx');
 const os      = require('os');
 const influx  = new Influx.InfluxDB({
   host: 'localhost',
   database: 'Monitor',
   schema: [
-    {
+    {   
       measurement: 'Readings',
       fields: {
         Device: Influx.FieldType.STRING,
@@ -23,8 +38,9 @@ document.getElementById("publish").addEventListener("click", publishToBroker);
 document.getElementById("subscribe").addEventListener("click", subscribeToTopic); 
 
 document.getElementsByClassName("bbygood").addEventListener("click", connectToAccel); // connects to buttons;
-document.getElementsByClassName("findbby").addEventListener("click", connectToLED); 
+//document.getElementsByClassName("findbby").addEventListener("click", connectToLED); 
 document.getElementsByClassName("direction").addEventListener("click", connectToMag);
+document.getElementById("myCheck").addEventListener("click", switchLED);
 
 //client.onConnected = onConnected;
 client.onConnectionLost = onConnectionLost;
@@ -105,6 +121,7 @@ function connectToMag(){
 
 function connectToLED(){
     console.log("LED");
+
     influx.query(`
         select * from Readings
         where Device = ${Influx.escape.stringLit(Device.LED())}
@@ -114,3 +131,17 @@ function connectToLED(){
         rows.forEach(row => console.log(`The gateway at ${row.read_os}'s ${row.Device} value was ${row.Value}`))
     });
 }
+
+function myFunction() {
+    // Get the checkbox
+    var checkBox = document.getElementById("myCheck");
+    // Get the output text
+    var text = document.getElementById("text");
+  
+    // If the checkbox is checked, display the output text
+    if (checkBox.checked == true){
+      text.style.display = "block";
+    } else {
+      text.style.display = "none";
+    }
+  }

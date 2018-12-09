@@ -1,16 +1,17 @@
 {
   "name": "front_end",
   "version": "1.0.0",
-  "description": "",
   "main": "MQTTConnPubHive.js",
   "dependencies": {
     "influx": "^5.0.7",
-    "influxdb": "0.0.1"
+    "influxdb": "0.0.1",
+    "requirejs": "^2.3.6"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }
