@@ -91,12 +91,12 @@ function discoverDeviceEventHandler(peripheral) { 						//event handler callback
 }
 
 function connectCallBack(error) { 										// returns device name
-	// if (error) {
-	// 	console.log("error connecting to peripheral");
-	// } else {		
+	if (error) {
+		console.log("error connecting to peripheral");
+	} else {		
 		console.log('Connected to peripheral: ' + "   " + peripheralGlobal.advertisement.localName);
 		peripheralGlobal.discoverServices([], discoverServicesCallback); // jumps to services function
-	//}
+	}
 }
 
 function discoverServicesCallback(error, services) { 					// takes services and sends to characteristics

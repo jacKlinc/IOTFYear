@@ -69,15 +69,9 @@
 				<span class="contact100-form-title">
 					Baby Monitor
 				</span>
-				<div class="wrap-input100 validate-input" data-validate = "Message is required">
+				<div class="wrap-input100 validate-input">
 					<textarea class="input100" name="message" placeholder="Output"></textarea>
-				</div>
-				<script>
-					var textArea = document.getElementById("input100");
-					function outputToBox(){
-						textArea.value = "wow";
-					}
-				</script>
+				</div>	
 				<div class="bbygood" style="width: 150px;">
 					<div class="wrap-contact100-form-btn">
 						<div class="contact100-form-bgbtn"></div>
@@ -86,6 +80,7 @@
 						</button>
 					</div>
 				</div>
+				<div>.</div>
 				<div class="direction" style="width: 150px;">
 						<div class="wrap-contact100-form-btn">
 							<div class="contact100-form-bgbtn"></div>
@@ -93,13 +88,41 @@
 								Baby Go Where?
 							</button>
 						</div>
-				</div>
+				</div>	
 			</form>
-			<h2>Light</h2>
-				<label class="switch">
-					<input type="checkbox" checked>
-					<span class="slider round"></span>
-				</label>
+			<div>.</div>
+			<!---<h2>Light</h2>
+			<label class="switch">
+				<input type="checkbox" checked>
+				<span class="slider round"></span>
+			</label>-->
+			<div class="LEDOn" style="width: 75px;">
+				<div class="wrap-contact100-form-btn">
+					<div class="contact100-form-bgbtn"></div>
+					<button class="contact100-form-btn">
+						ON
+					</button>
+					<div>--------------</div>
+					<button class="contact100-form-btn">
+						OFF
+					</button>
+				</div>
+			</div>
+			<!-- <div class="LEDOn" style="width: 75px;">
+				<div class="wrap-contact100-form-btn">
+					<div class="contact100-form-bgbtn"></div>
+					
+				</div>
+			</div> -->
+			<div>.</div>
+			<div class="conSub" style="width: 150px;">
+				<div class="wrap-contact100-form-btn">
+					<div class="contact100-form-bgbtn"></div>
+					<button class="contact100-form-btn">
+						Connect
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="paho-mqtt.js" ></script><!--paho library-->
