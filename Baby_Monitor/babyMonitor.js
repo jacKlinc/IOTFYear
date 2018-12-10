@@ -42,7 +42,7 @@ function messageCallBack(message) {								// this determines what the user want
 		ledState = false, serviceNo = 2;								// state is off, in LED service
 		console.log("LED is off");
 		peripheralGlobal.discoverServices([], discoverServicesCallback);
-	}else if(message == 'baby heading?') {                              // what direction is device?
+	} else if(message == 'baby heading?') {                              // what direction is device?
 		serviceNo = 3;                                                  // magService selected
 		console.log("Mag");
 		peripheralGlobal.discoverServices([], discoverServicesCallback); 
@@ -50,7 +50,11 @@ function messageCallBack(message) {								// this determines what the user want
 		serviceNo = 4;                                                  // accelService selected
 		console.log("Accel");
 		peripheralGlobal.discoverServices([], discoverServicesCallback); 
-	} else if(message == 'exit') {                                      // the user wants to exit               
+	} else if(message == 'ten') {                                      // the user wants to exit               
+        serviceNo = 5;                                                  // Influx Service selected
+		console.log("Influx");
+		peripheralGlobal.discoverServices([], discoverServicesCallback); 
+    } else if(message == 'exit') {                                      // the user wants to exit               
         peripheralGlobal.disconnect(disconnectCallback);
         console.log("Disconected");
     }
@@ -121,9 +125,9 @@ function discoverCharsCallback(error, characteristics) { 		        // used to de
 				sensorLevelData.write(new Buffer([ledState]), false , writeCallBackError);// change ledState to off
 			}
 			var ledString = ledState.toString();                        // converts bool to string
-			client.publish('JackIOT/yo', ledString, publishCallBack);   // publishes state of LED
-			client.unsubscribe('JackIOT/yo');
-			client.subscribe('JackIOT/yo');
+			client.publish('hup/dup', ledString, publishCallBack);   // publishes state of LED
+			client.unsubscribe('hup/dup');
+			client.subscribe('hup/dup');
 		} else if(serviceNo == 3 || serviceNo == 4) {										// if direction is selected (service 3)
 			for (var i in characteristics) {                            // iterates through characteristics to print X, Y, Z
 				var sensorLevelData = characteristics[i];                       
@@ -132,19 +136,41 @@ function discoverCharsCallback(error, characteristics) { 		        // used to de
                 } else{
                     sensorLevelData.read(readMag);// jumps to readMag
                 }
-                client.unsubscribe('JackIOT/yo');
-				client.subscribe('JackIOT/yo');
+                client.unsubscribe('hup/dup');
+				client.subscribe('hup/dup');
+            }
+        } else {										// if direction is selected (service 3)
+			for (var i in characteristics) {                            // iterates through characteristics to print X, Y, Z
+				var sensorLevelData = characteristics[i];                       
+                sensorLevelData.read(readDB);// jumps to readMag
+                client.unsubscribe('hup/dup');
+				client.subscribe('hup/dup');
             }
         }
 	}
 }
 
+function writeCallBackError(error) {                                    // logs error when called
+	if(error) {
+		console.log("write error");
+	} 
+}
+
+function disconnectCallback(error) { 									// this will be executed when the disconnect request returns
+	if (error) {
+		console.log("error disconnecting");
+	} else {
+		console.log("Disconnecting and stopping scanning");
+	}
+}
+
+/************* Reading Devices **************** */
 function readMag(error, data) { 										// prints accel data
 	if (error) {
 		console.log("error reading data");
 	} else {
 		var mag = data.toString('hex');								    // converts X, Y, Z on each iteration of for loop
-		client.publish('JackIOT/yo', 'Baby direction: ' + mag, publishCallBack); // publishes the heading of device
+		client.publish('hup/dup', 'Baby direction: ' + mag, publishCallBack); // publishes the heading of device
 		influx.writePoints([
 			{
 			  measurement: 'Readings', 
@@ -160,7 +186,7 @@ function readAccel(error, data) { 										// prints accel data
 		console.log("error reading data");
 	} else {
 		var accel = data.toString('10');								// same as readMag
-		client.publish('JackIOT/yo', 'Baby hex: ' + accel, publishCallBack); // publishes acceleration of device
+		client.publish('hup/dup', 'Baby hex: ' + accel, publishCallBack); // publishes acceleration of device
 		influx.writePoints([
 			{
 			  measurement: 'Readings', 
@@ -171,16 +197,17 @@ function readAccel(error, data) { 										// prints accel data
 	}
 }
 
-function writeCallBackError(error) {                                    // logs error when called
-	if(error) {
-		console.log("write error");
-	} 
-}
-
-function disconnectCallback(error) { 									// this will be executed when the disconnect request returns
+function readDB(error) { 										// reads DB data
 	if (error) {
-		console.log("error disconnecting");
+		console.log("error reading data");
 	} else {
-		console.log("Disconnecting and stopping scanning");
+		influx.query(`
+			select * from Readings
+			where read_os = ${Influx.escape.stringLit(os.hostname())} 
+			order by time desc
+			limit 10
+		`).then(rows => { // above query requests all from current host, descending order, max 10
+		rows.forEach(row => console.log(`The gateway at ${row.read_os}'s ${row.Device} value was 0x${row.Value}`))
+		});
 	}
 }
