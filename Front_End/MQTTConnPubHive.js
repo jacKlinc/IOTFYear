@@ -37,7 +37,8 @@ var subscribeOptions = {                         // subscribe requires options
 };
 
 function onMessageArrived(message) {
-    console.log("onMessageArrived:" + message.payloadString);
+    //console.log("onMessageArrived:" + message.payloadString);textbby
+    document.getElementById("textbby").innerHTML = message.payloadString;
 }
 
 function subscribeToTopic(){
@@ -68,17 +69,17 @@ function onConnectionLost(responseObject) {                 // called when the c
 /************* Button Functions **************** */
 function connectToAccel(){
     console.log("Accel");
-    client.publish("hup/dup", "baby good?", 0, false);     //
+    client.publish("hup/dup", "baby good", 0, false);     //
 }
 
 function connectToMag(){
     console.log("Mag");
-    client.publish("hup/dup", "baby heading?", 0, false);     // 
+    client.publish("hup/dup", "baby heading", 0, false);     // 
 }
 
 function switchLEDOn(){
     console.log("LED On");
-    client.publish("hup/dup", "baby where?", 0, false);     //
+    client.publish("hup/dup", "baby where", 0, false);     //
 }
 
 function switchLEDOff(){

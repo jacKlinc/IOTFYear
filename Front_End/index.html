@@ -6,63 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<style>
-		.switch {
-			position: relative;
-			display: inline-block;
-			width: 60px;
-			height: 34px;
-		}
-		.switch input { 
-			opacity: 0;
-			width: 0;
-			height: 0;
-		}
-		.slider {
-			position: absolute;
-			cursor: pointer;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-color: #ccc;
-			-webkit-transition: .4s;
-			transition: .4s;
-		}
-		.slider:before {
-			position: absolute;
-			content: "";
-			height: 26px;
-			width: 26px;
-			left: 4px;
-			bottom: 4px;
-			background-color: white;
-			-webkit-transition: .4s;
-			transition: .4s;
-		}
-		input:checked + .slider {
-			background-color: #d5007d;
-		}
-		input:focus + .slider {
-			box-shadow: 0 0 1px #d5007d;
-		}
-		
-		input:checked + .slider:before {
-			-webkit-transform: translateX(26px);
-			-ms-transform: translateX(26px);
-			transform: translateX(26px);
-		}
-		/* Rounded sliders */
-		.slider.round {
-			border-radius: 34px;
-		}
-		
-		.slider.round:before {
-			border-radius: 50%;
-		}
-	</style>
 </head>
 <body>
+
+		<textarea rows="3" cols="20" name="message" placeholder="Output" id="textbby"></textarea>
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form class="contact100-form validate-form">
@@ -70,7 +17,7 @@
 					Baby Monitor
 				</span>
 				<div class="wrap-input100 validate-input">
-					<textarea class="input100" name="message" placeholder="Output"></textarea>
+					<!-- <textarea rows="3" cols="20" name="message" placeholder="Output" id="textbby"></textarea> -->
 				</div>	
 				<div class="bbygood" style="width: 150px;">
 					<div class="wrap-contact100-form-btn">
@@ -80,7 +27,7 @@
 						</button>
 					</div>
 				</div>
-				<div>.</div>
+				<div> </div>
 				<div class="direction" style="width: 150px;">
 						<div class="wrap-contact100-form-btn">
 							<div class="contact100-form-bgbtn"></div>
@@ -90,7 +37,7 @@
 						</div>
 				</div>	
 			</form>
-			<div>.</div>
+			<div> </div>
 			<div class="LEDOn" style="width: 75px;">
 				<div class="wrap-contact100-form-btn">
 					<div class="contact100-form-bgbtn"></div>
@@ -107,7 +54,7 @@
 					</button>
 				</div>
 			</div>
-			<div>.</div>
+			<div> </div>
 			<div class="conSub" style="width: 150px;">
 				<div class="wrap-contact100-form-btn">
 					<div class="contact100-form-bgbtn"></div>
@@ -116,7 +63,7 @@
 					</button>
 				</div>
 			</div>
-			<div>.</div>
+			<div> </div>
 			<div class="lastTen" style="width: 150px;">
 				<div class="wrap-contact100-form-btn">
 					<div class="contact100-form-bgbtn"></div>
@@ -125,6 +72,7 @@
 					</button>
 				</div>
 			</div>
+			<img src="Baby-Safe-logo.jpg" alt="Safe Baby" style="width:300px;height:300px;">
 		</div>
 	</div>
 	<script type="text/javascript" src="paho-mqtt.js" ></script><!--paho library-->
